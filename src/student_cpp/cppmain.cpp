@@ -1,15 +1,19 @@
 #include "ctrain_handler.h"
 #include "locomotive.h"
+#include "threadloco.h"
 
 #include <QList>
 
 //Creation d'une locomotive
-static Locomotive locomotive;
+static Locomotive locomotive1;
+static Locomotive locomotive2;
+
 
 //Arret d'urgence
 void emergency_stop()
 {
-    locomotive.arreter();
+    locomotive1.arreter();
+    locomotive2.arreter();
     afficher_message("\nSTOP!");
 }
 
@@ -22,8 +26,9 @@ int cmain()
     selection_maquette(MAQUETTE_B);
 
     //Initialisation d'un parcours
-    QList<int> parcours;
-    parcours << 22 << 21 << 16 << 15 << 10 << 9 << 4 << 3;
+    QList<int> parcours1,parcours2;
+    parcours1 << 5 << 24 << 21 << 16 << 17 << 12 << 11 << 4;
+    parcours2 << 3 << 19 << 14 << 13 << 10 << 11 << 4;
 
     //Initialisation des aiguillages
     diriger_aiguillage(16,  DEVIE,0);
@@ -38,28 +43,12 @@ int cmain()
     diriger_aiguillage(1,TOUT_DROIT, 0);
     diriger_aiguillage(13, TOUT_DROIT, 0);
 
-    //Initialisation de la locomotive
-    locomotive.fixerNumero(1);
-    locomotive.fixerVitesse(12);
-    locomotive.fixerPosition(22,3);
-    locomotive.allumerPhares();
-    locomotive.demarrer();
-    locomotive.afficherMessage("Ready!");
+    ThreadLoco loco1(locomotive1,1,parcours1,0,0), loco2(locomotive2,2,parcours2,0,0);
+    loco1.start();
+    loco2.start();
 
-    //Attente du passage sur les contacts
-    for (int i = 1; i < parcours.size(); i++) {
-        attendre_contact(parcours.at(i));
-        afficher_message(qPrintable(QString("The engine no. %1 has reached contact no. %2.")
-                                    .arg(locomotive.numero()).arg(parcours.at(i))));
-        locomotive.afficherMessage(QString("I've reached contact no. %1.").arg(parcours.at(i)));
-    }
-
-    //Arreter la locomotive
-    locomotive.arreter();
-    locomotive.afficherMessage("Yeah, piece of cake!");
-
-    //Fin de la simulation
-    mettre_maquette_hors_service();
+    loco1.wait();
+    loco2.wait();
 
     //Exemple de commande
     afficher_message("Enter a command in the input field at the top of the window.");
