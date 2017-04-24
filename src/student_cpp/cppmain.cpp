@@ -26,8 +26,8 @@ int cmain()
 
     //Initialisation d'un parcours
     QList<int> parcours1,parcours2;
-    parcours1 << 24 << 21 << 16 << 17 << 12 << 11 << 6 << 5;
-    parcours2 << 19 << 14 << 13 << 10 << 11 << 6 << 3;
+    parcours1 << 16 << 17 << 12 << 11 << 6 << 5 << 24 << 21;
+    parcours2 << 13 << 10 << 11 << 6 << 3 << 19 << 14 ;
 
     //init + decl troncon critique
     TronconCritique::tronconCritique = new TronconCritique(10,12,3,5);
@@ -45,7 +45,7 @@ int cmain()
     diriger_aiguillage(5,TOUT_DROIT,0);
     diriger_aiguillage(3,TOUT_DROIT,0);
 
-    //Initiallisation des aiguillages critiques
+    //Initiallisation des aiguillages critiques dynamique
     QList<Aiguillage*> aiguillages1,aiguillages2;
     aiguillages1 << new Aiguillage(8,12,TOUT_DROIT,AVANT)
                  << new Aiguillage(7,12,TOUT_DROIT,AVANT)
@@ -66,14 +66,14 @@ int cmain()
                  << new Aiguillage(3,3,DEVIE,ARRIERE);
 
     //Creation des locomotives
-    locomotive1 = new Locomotive(1,10,parcours1,1,aiguillages1);
-    locomotive2 = new Locomotive(2,10,parcours2,1,aiguillages2);
+    locomotive1 = new Locomotive(1,12,parcours1,2,aiguillages1);
+    locomotive2 = new Locomotive(2,12,parcours2,1,aiguillages2);
 
-    locomotive1->fixerPosition(24,5);
+    locomotive1->fixerPosition(16,21);
     locomotive1->allumerPhares();
     locomotive1->afficherMessage("Ready!");
 
-    locomotive2->fixerPosition(19,3);
+    locomotive2->fixerPosition(13,14);
     locomotive2->allumerPhares();
     locomotive2->afficherMessage("Ready!");
 

@@ -80,7 +80,6 @@ void TronconCritique::bloqueTroncon(Locomotive* l)
 
     if(!troncLibreTemp || locoPriorSup != l)
     {
-        l->afficherMessage("je m'arrete");
         l->arreter();
         attenteLoco = true;
 

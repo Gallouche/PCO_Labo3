@@ -57,7 +57,6 @@ void Locomotive::run(){
                 }
                 for(Aiguillage* a : _aiguillages){
                     if(a->getContactDecl() == contactCurrent && a->getSens() == _sens){
-                        afficherMessage("Changement aiguillage: " + a->getNum());
                         diriger_aiguillage(a->getNum(),a->getDirection(),0);
                     }
                 }
@@ -69,7 +68,7 @@ void Locomotive::run(){
                 if(sortie){
                     inTronconCo = false;
                     TronconCritique::tronconCritique->libererTroncon(this);
-                    sortie = true;
+                    sortie = false;
                     afficherMessage("troncon liberer");
                 }
                 afficherMessage(QString("I've reached contact no. %1.").arg(_parcours.at(i)));
