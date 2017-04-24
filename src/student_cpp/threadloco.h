@@ -5,17 +5,18 @@
 #include <QThread>
 #include "ctrain_handler.h"
 #include "locomotive.h"
+#include "tronconcritique.h"
 
 
 class ThreadLoco : public QThread
 {
     Locomotive loco;
     QList<int> parcours;
-    int debutCrit;
-    int finCrit;
+    QList<TronconCritique> troncons;
     int num;
 public:
-    ThreadLoco(Locomotive loco, int num, QList<int> parcours, int debutCrit, int finCrit);
+    ThreadLoco(Locomotive loco, int num, QList<int> parcours,
+               QList<TronconCritique>troncons);
     void run();
 };
 

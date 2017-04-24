@@ -1,11 +1,11 @@
 #include "threadloco.h"
 
-ThreadLoco::ThreadLoco(Locomotive loco, int num,QList<int> parcours, int debutCrit, int finCrit):
+ThreadLoco::ThreadLoco(Locomotive loco, int num,QList<int> parcours,
+                       QList<TronconCritique> troncons):
     loco(loco),
     num(num),
     parcours(parcours),
-    debutCrit(debutCrit),
-    finCrit(finCrit)
+    troncons(troncons)
 {}
 
 void ThreadLoco::run(){
