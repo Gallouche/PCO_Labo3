@@ -66,8 +66,8 @@ int cmain()
                  << new Aiguillage(3,3,DEVIE,ARRIERE);
 
     //Creation des locomotives
-    locomotive1 = new Locomotive(1,20,parcours1,1,aiguillages1);
-    locomotive2 = new Locomotive(2,20,parcours2,1,aiguillages2);
+    locomotive1 = new Locomotive(1,10,parcours1,1,aiguillages1);
+    locomotive2 = new Locomotive(2,10,parcours2,1,aiguillages2);
 
     locomotive1->fixerPosition(24,5);
     locomotive1->allumerPhares();
