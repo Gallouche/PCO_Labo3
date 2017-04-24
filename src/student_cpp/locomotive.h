@@ -4,6 +4,7 @@
 #include <QString>
 #include <QThread>
 #include <QList>
+#include "aiguillage.h"
 
 #define AVANT 1
 #define ARRIERE 0
@@ -15,6 +16,7 @@ class Locomotive : public QThread
     bool _enFonction;
     int _priorite;
     QList<int> _parcours;
+    QList<Aiguillage*> _aiguillages;
     int _sens;
 
 public:
@@ -29,7 +31,10 @@ public:
      * @param numero Numero de la locomotive.
      * @param vitesse Vitesse initiale de la locomotive.
      */
-    Locomotive(int numero, int vitesse, QList<int> parcours, int priorite );
+    Locomotive(int numero, int vitesse, QList<int> parcours,
+               int priorite, QList<Aiguillage*> aiguillages);
+
+    ~Locomotive();
 
     /**
      * @brief run
@@ -84,7 +89,11 @@ public:
     //! Change le sens de marche de la locomotive.
     void inverserSens();
 
+    //changer la priorite de la locomotive
     void fixerPriorite(int priorite);
+
+    //getter sur la priorite
+    int getPriorite();
 };
 
 #endif // LOCOMOTIVE_H

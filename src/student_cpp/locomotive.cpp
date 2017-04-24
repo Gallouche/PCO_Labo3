@@ -1,35 +1,84 @@
 #include "locomotive.h"
 #include "ctrain_handler.h"
+#include "tronconcritique.h"
 
 Locomotive::Locomotive() :
+    _aiguillages(),
     _numero(-1),
     _vitesse(0),
     _enFonction(false),
-    _priorite(-1),
-    _sens(AVANT)
+    _sens(AVANT),
+    _parcours()
 {}
 
 Locomotive::Locomotive(int numero, int vitesse, QList<int> parcours,
-                       int priorite) :
+                       int priorite, QList<Aiguillage*> aiguillages) :
     _numero(numero),
     _vitesse(vitesse),
     _enFonction(false),
     _priorite(priorite),
     _parcours(parcours),
-    _sens(AVANT)
+    _sens(AVANT),
+    _aiguillages(aiguillages)
 {}
 
-void Locomotive::run(){
-    fixerPosition(_parcours.at(0),_parcours.at(_parcours.size()-1));
-    allumerPhares();
-    afficherMessage("Ready!");
-
-    for(int i = 1; i < _parcours.size(); i++){
-        attendre_contact(_parcours.at(i));
-        afficherMessage(QString("I've reached contact no. %1.").arg(_parcours.at(i)));
+Locomotive::~Locomotive(){
+    for(Aiguillage* a : _aiguillages){
+        delete a;
     }
-    arreter();
-    afficherMessage("I'm done!");
+}
+
+void Locomotive::run(){
+    while (true) {
+        int nbtours = 0;
+        bool inTronconCo = false;
+        bool sortie = false;
+        bool entree = false;
+
+        while (nbtours < 2) {
+            for(int i = 0; i < _parcours.size(); i++){
+                int contactCurrent = _parcours.at(i);
+                if(!inTronconCo && ((i+1) < _parcours.size()) &&
+                        TronconCritique::tronconCritique->bordTroncon(_parcours.at(i+1))){
+                    afficherMessage("inscription");
+                    TronconCritique::tronconCritique->demandeTroncon(this);
+                }
+                if(TronconCritique::tronconCritique->bordTroncon(contactCurrent)){
+                    if(!inTronconCo){
+                        afficherMessage("reservation");
+                        TronconCritique::tronconCritique->bloqueTroncon(this);
+                        afficherMessage("entre dans le troncon");
+                        entree = true;
+                    }
+                    else{
+                        afficherMessage("sortie du troncon");
+                        sortie = true;
+                    }
+                }
+                for(Aiguillage* a : _aiguillages){
+                    if(a->getContactDecl() == contactCurrent && a->getSens() == _sens){
+                        afficherMessage("Changement aiguillage: " + a->getNum());
+                        diriger_aiguillage(a->getNum(),a->getDirection(),0);
+                    }
+                }
+                attendre_contact(contactCurrent);
+                if(entree){
+                    inTronconCo = true;
+                    entree = false;
+                }
+                if(sortie){
+                    inTronconCo = false;
+                    TronconCritique::tronconCritique->libererTroncon(this);
+                    sortie = true;
+                    afficherMessage("troncon liberer");
+                }
+                afficherMessage(QString("I've reached contact no. %1.").arg(_parcours.at(i)));
+            }
+            nbtours++;
+        }
+        std::reverse(_parcours.begin(),_parcours.end());
+        inverserSens();
+    }
 }
 
 int Locomotive::numero() const
@@ -95,4 +144,8 @@ void Locomotive::inverserSens()
 
 void Locomotive::fixerPriorite(int priorite){
     _priorite = priorite;
+}
+
+int Locomotive::getPriorite(){
+    return _priorite;
 }

@@ -96,7 +96,8 @@ SOURCES += \
     src/voieaiguillagetriple.cpp \
     src/ctrain_handler.cpp \
     src/student_cpp/locomotive.cpp \
-    src/student_cpp/tronconcritique.cpp
+    src/student_cpp/tronconcritique.cpp \
+    src/student_cpp/aiguillage.cpp
 
 HEADERS += \
     src/mainwindow.h \
@@ -121,6 +122,7 @@ HEADERS += \
     src/voieaiguillagetriple.h \
     src/ctrain_handler.h \
     src/student_cpp/locomotive.h \
-    src/student_cpp/tronconcritique.h
+    src/student_cpp/tronconcritique.h \
+    src/student_cpp/aiguillage.h
 
 OTHER_FILES += infosVoies.txt
