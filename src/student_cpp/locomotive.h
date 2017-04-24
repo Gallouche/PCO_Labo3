@@ -2,9 +2,20 @@
 #define LOCOMOTIVE_H
 
 #include <QString>
+#include <QThread>
+#include <QList>
 
-class Locomotive
+#define AVANT 1
+#define ARRIERE 0
+
+class Locomotive : public QThread
 {
+    int _numero;
+    int _vitesse;
+    bool _enFonction;
+    int _priorite;
+    QList<int> _parcours;
+    int _sens;
 
 public:
 
@@ -18,7 +29,12 @@ public:
      * @param numero Numero de la locomotive.
      * @param vitesse Vitesse initiale de la locomotive.
      */
-    Locomotive(int numero, int vitesse);
+    Locomotive(int numero, int vitesse, QList<int> parcours, int priorite );
+
+    /**
+     * @brief run
+     */
+    void run();
 
     /** Retourne le numero de la locomotive.
      * @return Numero de la locomotive.
@@ -68,10 +84,7 @@ public:
     //! Change le sens de marche de la locomotive.
     void inverserSens();
 
-private:
-    int _numero;
-    int _vitesse;
-    bool _enFonction;
+    void fixerPriorite(int priorite);
 };
 
 #endif // LOCOMOTIVE_H

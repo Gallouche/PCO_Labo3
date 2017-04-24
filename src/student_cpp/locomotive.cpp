@@ -4,17 +4,32 @@
 Locomotive::Locomotive() :
     _numero(-1),
     _vitesse(0),
-    _enFonction(false)
-{
+    _enFonction(false),
+    _priorite(-1),
+    _sens(AVANT)
+{}
 
-}
-
-Locomotive::Locomotive(int numero, int vitesse) :
+Locomotive::Locomotive(int numero, int vitesse, QList<int> parcours,
+                       int priorite) :
     _numero(numero),
     _vitesse(vitesse),
-    _enFonction(false)
-{
+    _enFonction(false),
+    _priorite(priorite),
+    _parcours(parcours),
+    _sens(AVANT)
+{}
 
+void Locomotive::run(){
+    fixerPosition(_parcours.at(0),_parcours.at(_parcours.size()-1));
+    allumerPhares();
+    afficherMessage("Ready!");
+
+    for(int i = 1; i < _parcours.size(); i++){
+        attendre_contact(_parcours.at(i));
+        afficherMessage(QString("I've reached contact no. %1.").arg(_parcours.at(i)));
+    }
+    arreter();
+    afficherMessage("I'm done!");
 }
 
 int Locomotive::numero() const
@@ -75,4 +90,9 @@ void Locomotive::arreter()
 void Locomotive::inverserSens()
 {
     inverser_sens_loco(_numero);
+    _sens = !_sens;
+}
+
+void Locomotive::fixerPriorite(int priorite){
+    _priorite = priorite;
 }
