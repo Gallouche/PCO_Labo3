@@ -1,3 +1,31 @@
+/**
+ * -------------------------------------------------------------------------------
+ * Laboratoire : PCO - Labo3
+ * Fichier     : cppmain.cpp
+ * Auteur(s)   : Théo Gallandat & Kevin Moreira
+ * Date        : 24/04/2017
+ *
+ * But         : Fourni une amorce pour la simulation et défini les paramètres
+ *               utiles.
+ *
+ * Remarque(s) : Nous avons choisi de modifier la classe locomitive de façon
+ *      a la rendre héritière de Qthread, et de gerer directement
+ *      la concurence a l'interieur de la classe et non pas en passant
+ *      un locomitive a une une autre classe thread.
+ *      Nous avons modifier le constructeur de façon a pouvoir lui passer
+ *      les paramètre voulu tel que le parcours a effectuer, les
+ *      aiguillages dynamique et sa priorité.
+ *
+ *      Nous avons crée un classe aiguillage pour gere les changement
+ *      a effectuer en entrée et sortie de troncon critique, car les
+ *      locomotives ne suivent logiquement pas le même parcours et
+ *      les orientations ne peuvent pas etre définie statiquement.
+ *
+ *      Nous avons crée un classe TronconCritique qui permet de definir
+ *      des troncons critique, et d'y gere les acces des différentes
+ *      locomotives.
+ -------------------------------------------------------------------------------
+ */
 #include "ctrain_handler.h"
 #include "locomotive.h"
 #include "tronconcritique.h"

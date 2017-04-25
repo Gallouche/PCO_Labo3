@@ -1,3 +1,17 @@
+/**
+ * -------------------------------------------------------------------------------
+ * Laboratoire : PCO - Labo3
+ * Fichier     : locomotive.h
+ * Auteur(s)   : Théo Gallandat & Kevin Moreira
+ * Date        : 24/04/2017
+ *
+ * But         : Fourni une classe locomotive threadable qui gere les
+ *               locomotives.
+ *
+ * Remarque(s) : Modification du code source fourni pour la labo
+ -------------------------------------------------------------------------------
+ */
+
 #ifndef LOCOMOTIVE_H
 #define LOCOMOTIVE_H
 
@@ -30,10 +44,16 @@ public:
      * Initialise la locomotive en precisant son numero et sa vitesse initiale.
      * @param numero Numero de la locomotive.
      * @param vitesse Vitesse initiale de la locomotive.
+     * @param parcours Parcours a effectuer.
+     * @param priotrite Priorite de la locomotive.
+     * @param aiguillages Liste des aiguillages dynamique.
      */
     Locomotive(int numero, int vitesse, QList<int> parcours,
                int priorite, QList<Aiguillage*> aiguillages);
 
+    /**
+      * Destructeur
+      */
     ~Locomotive();
 
     /**
