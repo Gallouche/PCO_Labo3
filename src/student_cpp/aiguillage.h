@@ -15,7 +15,9 @@
 #ifndef AIGUILLAGE_H
 #define AIGUILLAGE_H
 
-
+/**
+ * @brief The Aiguillage class représente un aiguillage
+ */
 class Aiguillage
 {
     int num;
@@ -28,8 +30,8 @@ public:
      * @brief Aiguillage Constructeur
      * @param num Numéro de l'aiguillage
      * @param contactDecl Contact ou l'on doit changer l'aiguillage
-     * @param direction
-     * @param sens
+     * @param direction direction de l'aiguillage
+     * @param sens sens de l'aiguillage
      */
     Aiguillage(int num, int contactDecl, int direction, int sens);
     int getNum();

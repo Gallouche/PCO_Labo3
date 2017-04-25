@@ -1,8 +1,14 @@
 /**
- * File:       tronconcritique.h
+ * -------------------------------------------------------------------------------
+ * Laboratoire : PCO - Labo3
+ * Fichier     : tronconcritique.h
+ * Auteur(s)   : Théo Gallandat & Kevin Moreira
+ * Date        : 24/04/2017
  *
- * Created by: Kevin M. Theo G.
- * Created on: 25.03.2017
+ * But         : Fourni une classe tronconcritique pour la gestion
+ *               des trancons critiques
+ * Remarque(s) : R.A.S.
+ -------------------------------------------------------------------------------
  */
 
 #ifndef TRONCONCRITIQUE_H
